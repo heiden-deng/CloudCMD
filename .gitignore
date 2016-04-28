@@ -3,3 +3,5 @@ build
 dist
 *.swp
 *.egg-info
+*.pyc
+.DS_Store
