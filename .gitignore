@@ -1,0 +1,5 @@
+.idea
+build
+dist
+*.swp
+*.egg-info
