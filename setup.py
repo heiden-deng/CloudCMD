@@ -4,6 +4,7 @@ import os
 
 packages = [
     'speedycmd',
+    'speedycmd.products',
 ]
 
 if sys.version_info < (2, 6):
@@ -19,10 +20,16 @@ if not os.path.exists(os.path.expanduser('~') + "/.speedycfg"):
 
 setup(
     name='speedycloudcmd',
-    version='1.0',
+    version='1.1',
     packages=packages,
     include_package_data=True,
     entry_points={
-        'console_scripts': ['censor = speedycmd.speedycmd:execute']
+        'console_scripts': [
+            'censor = speedycmd.speedycmd:execute', 'server = speedycmd.speedycmd:execute',
+            'volume = speedycmd.speedycmd:execute', 'database = speedycmd.speedycmd:execute',
+            'balancer = speedycmd.speedycmd:execute', 'network = speedycmd.speedycmd:execute',
+            'router = speedycmd.speedycmd:execute', 'video = speedycmd.speedycmd:execute',
+            'cache = speedycmd.speedycmd:execute', 'cdn = speedycmd.speedycmd:execute',
+        ]
     },
 )

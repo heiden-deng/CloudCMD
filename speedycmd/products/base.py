@@ -163,4 +163,3 @@ class AbstractProductAPI(object):
 
     def get(self, path, params=None):
         return self.request('GET', path, params)
-
