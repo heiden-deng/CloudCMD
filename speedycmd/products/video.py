@@ -8,7 +8,7 @@ class VideoAPI(AbstractProductAPI):
     def _get_path(self, suffix):
         return "%s%s" % (self.BASE_PATH, suffix)
 
-    def create_vod(self, name, uploaded_video_file, origin_image_file, introduction, labels, upload_time):
+    def create_vod(self, name, uploaded_video_file, origin_image_file=None, introduction=None, labels=None):
         # 创建视频
         params = {
             'name': name,
@@ -16,7 +16,6 @@ class VideoAPI(AbstractProductAPI):
             'origin_image_file': origin_image_file,
             'introduction': introduction,
             'labels': labels,
-            'upload_time': upload_time,
         }
         path = self._get_path('vods/create')
         return self.post(path, params)
@@ -26,7 +25,7 @@ class VideoAPI(AbstractProductAPI):
         path = self._get_path("vods")
         return self.get(path)
 
-    def vod_detail(self, id):
+    def detail(self, id):
         # 获取视频详细信息
         path = self._get_path("vods/%s" % id)
         return self.get(path)

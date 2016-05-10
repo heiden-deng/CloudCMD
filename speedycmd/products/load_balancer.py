@@ -12,111 +12,111 @@ class LoadBalancerAPI(AbstractProductAPI):
         # 负载均衡列表
         return self.post(self.BASE_PATH)
 
-    def create_load_balance(self, available_zone, isp, bandwidth):
+    def create_load_balance(self, az, isp, bandwidth):
         '''
         创建负载均衡
 
-        available_zone: 可用数据中心
+        az: 可用数据中心
         isp: 数据中心支持的运营商
         bandwidthnet: 带宽
 
         '''
         configurations = {
-            'az': available_zone,
+            'az': az,
             'isp': isp,
             'bandwidth': bandwidth,
         }
         path = self._get_path("provision")
         return self.post(path, configurations)
 
-    def add_backend_cloud_server(self, load_balancer_id, cloud_server_id, weight, ip_address):
+    def add_backend_cloud_server(self, lbid, csid, weight, ip):
         '''
         添加后端云主机
 
-        load_balancer_id: 负载均衡id
-        cloud_server_id: 云主机id
+        lbid: 负载均衡id
+        csid: 云主机id
         weight: 权重
-        ip_address: ip地址
+        ip: ip地址
 
         '''
         params = {
-            'cloud_server_id': cloud_server_id,
+            'cloud_server_id': csid,
             'weight': weight,
-            'ip_address': ip_address,
+            'ip_address': ip,
         }
-        path = self._get_path(str(load_balancer_id) + '/backends/add')
+        path = self._get_path(str(lbid) + '/backends/add')
         return self.post(path, params)
 
-    def add_backend_database(self, load_balancer_id, database_id, weight, ip_address):
+    def add_backend_database(self, lbid, did, weight, ip):
         '''
         添加后端数据库
 
-        load_balancer_id: 负载均衡id
-        database_id: 数据库id
+        lbid: 负载均衡id
+        did: 数据库id
         weight: 权重
-        ip_address: ip地址
+        ip: ip地址
 
         '''
         params = {
-            'database_id': database_id,
+            'database_id': did,
             'weight': weight,
-            'ip_address': ip_address,
+            'ip_address': ip,
         }
-        path = self._get_path(str(load_balancer_id) + '/backends/add')
+        path = self._get_path(str(lbid) + '/backends/add')
         return self.post(path, params)
 
-    def add_backend_cache(self, load_balancer_id, cache_id, weight, ip_address):
+    def add_backend_cache(self, lbid, cid, weight, ip):
         '''
         添加后端缓存
 
-        load_balancer_id: 负载均衡id
-        cache_id: 缓存id
+        lbid: 负载均衡id
+        cid: 缓存id
         weight: 权重
-        ip_address: ip地址
+        ip: ip地址
 
         '''
         params = {
-            'database_id': cache_id,
+            'database_id': cid,
             'weight': weight,
-            'ip_address': ip_address,
+            'ip_address': ip,
         }
-        path = self._get_path(str(load_balancer_id) + '/backends/add')
+        path = self._get_path(str(lbid) + '/backends/add')
         return self.post(path, params)
 
-    def update_backend(self, load_balancer_id, back_id, weight, ip_address):
+    def update_backend(self, lbid, bid, weight, ip):
         '''
         更新后端
 
-        load_balancer_id: 负载均衡id
-        back_id: 后端id
+        lbid: 负载均衡id
+        bid: 后端id
         weight: 权重
-        ip_address: ip地址
+        ip: ip地址
 
         '''
-        path = self._get_path(str(load_balancer_id) + '/backends/' + str(back_id) + '/update')
+        path = self._get_path(str(lbid) + '/backends/' + str(bid) + '/update')
         params = {
             'weight': weight,
-            'ip_address': ip_address,
+            'ip_address': ip,
         }
         return self.post(path, params)
 
-    def delete_backend(self, load_balancer_id, back_id):
+    def delete_backend(self, lbid, bid):
         '''
         删除后端
 
-        load_balancer_id: 负载均衡id
-        back_id: 后端id
+        lbid: 负载均衡id
+        bid: 后端id
 
         '''
-        path = self._get_path(str(load_balancer_id) + '/backends/' + str(back_id) + '/delete')
+        path = self._get_path(str(lbid) + '/backends/' + str(bid) + '/delete')
         return self.post(path)
 
-    def add_application(self, load_balancer_id, frontend, backend, protocol, strategy, check_interval, rise_times,
+    def add_app(self, lbid, frontend, backend, protocol, strategy, check_interval, rise_times,
                         fall_times):
         '''
         添加应用
 
-        load_balancer_id: 负载均衡id
+        lbid: 负载均衡id
         frontend: 前端端口
         backend: 后端端口
         protocol: 协议
@@ -135,26 +135,26 @@ class LoadBalancerAPI(AbstractProductAPI):
             'rise_times': rise_times,
             'fall_times': fall_times
         }
-        path = self._get_path(str(load_balancer_id) + '/applications/add')
+        path = self._get_path(str(lbid) + '/applications/add')
         return self.post(path, params)
 
-    def detail(self, load_balancer_id):
+    def detail(self, lbid):
         '''
         负载均衡详细信息
 
-        load_balancer_id: 负载均衡id
+        lbid: 负载均衡id
 
         '''
-        path = self._get_path(str(load_balancer_id))
+        path = self._get_path(str(lbid))
         return self.post(path)
 
-    def update_application(self, load_balancer_id, application_id, frontend, backend, protocol, strategy,
+    def update_app(self, lbid, appid, frontend, backend, protocol, strategy,
                            check_interval, rise_times, fall_times):
         '''
         更新应用
 
-        load_balancer_id: 负载均衡id
-        application_id: 应用id
+        lbid: 负载均衡id
+        appid: 应用id
         frontend: 前端端口
         backend: 后端端口
         protocol: 协议
@@ -173,29 +173,29 @@ class LoadBalancerAPI(AbstractProductAPI):
             'rise_times': rise_times,
             'fall_times': fall_times
         }
-        path = self._get_path(str(load_balancer_id) + '/applications/' + str(application_id) + '/update')
+        path = self._get_path(str(lbid) + '/applications/' + str(appid) + '/update')
         return self.post(path, params)
 
-    def delete_application(self, load_balancer_id, application_id):
+    def delete_app(self, lbid, appid):
         '''
         删除应用
 
-        load_balancer_id: 负载均衡id
-        application_id: 应用id
+        lbid: 负载均衡id
+        appid: 应用id
 
         '''
-        path = self._get_path(str(load_balancer_id) + '/applications/' + str(application_id) + '/delete')
+        path = self._get_path(str(lbid) + '/applications/' + str(appid) + '/delete')
         return self.post(path)
 
-    def get_available_zone(self):
+    def get_az(self):
         # 获得可用数据中心
         azs = self.get('/api/v1/availability_zones/names')
         return azs
 
-    def get_support_isps(self, az_name):
+    def get_support_isps(self, az):
         # 获得数据中心支持运营商
         azs = self.get('/api/v1/availability_zones/')
         for az in azs:
-            if az['name'] == az_name:
+            if az['name'] == az:
                 return az['support_isps']
         return ''

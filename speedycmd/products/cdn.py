@@ -88,42 +88,42 @@ class CdnAPI(AbstractProductAPI):
         path = self._get_path("refreshes/")
         return self.get(path)
 
-    def add_refresh(self, refresh_type, refresh_url_list):
+    def add_refresh(self, refresh_type, urls):
         '''
         添加文件目录刷新
 
         refresh_type: 刷新类型,
-        refresh_url_list: 刷新url列表, 其数据类型是list
+        urls: 刷新url列表, 其数据类型是list
 
         '''
         path = self._get_path("refreshes/add_refresh")
         params = {
             'refresh_type': refresh_type,
-            'refresh_urls': json.dumps(refresh_url_list)
+            'refresh_urls': json.dumps(urls)
         }
         return self.post(path, params)
 
-    def redo_refresh(self, refresh_id):
+    def redo_refresh(self, id):
         '''
         重新刷新文件目录
 
-        refresh_id: 刷新id
+        id: 刷新id
 
         '''
         path = self._get_path("refreshes/redo")
-        params = {"refresh_id": refresh_id}
+        params = {"refresh_id": id}
         return self.post(path, params)
 
-    def delete_refresh(self, id_list):
+    def delete_refresh(self, ids):
         '''
         删除刷新纪录
 
-        id_list: 刷新id列表, 其数据类型为list
+        ids: 刷新id列表, 其数据类型为list
 
         '''
         # 删除刷新纪录
         path = self._get_path("refreshes/delete")
-        params = {"id_list": json.dumps(id_list)}
+        params = {"id_list": json.dumps(ids)}
         return self.post(path, params)
 
     def preload_list(self):
@@ -131,25 +131,25 @@ class CdnAPI(AbstractProductAPI):
         path = self._get_path("preload/")
         return self.get(path)
 
-    def add_preload(self, preload_urls):
+    def add_preload(self, urls):
         '''
         添加问价预加载
 
-        preload_urls: 预加载url列表, 其数据类型为list
+        urls: 预加载url列表, 其数据类型为list
 
         '''
         path = self._get_path("preload/redo")
-        params = {"preload_urls": preload_urls}
+        params = {"preload_urls": urls}
         return self.post(path, params)
 
-    def delete_preload(self, id_list):
+    def delete_preload(self, ids):
         '''
         删除预加载纪录
         id_list: 预加载id列表, 其数据类型为list
 
         '''
         path = self._get_path("preload/delete")
-        params = {"id_list": json.dumps(id_list)}
+        params = {"id_list": json.dumps(ids)}
         return self.post(path, params)
 
     def set_group(self, id, group):
